@@ -84,7 +84,7 @@
 
 
 
-# U20, LAMP —( M ) MySQL
+## U20, LAMP —( M ) MySQL
 ### Installation,
 
 `anup@lamp:~$ sudo apt-get update`
