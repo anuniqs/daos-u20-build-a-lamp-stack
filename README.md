@@ -237,3 +237,98 @@ By default, `/var/log/apache2/error.log` , But this can be configured in `/etc/p
 `anup@lamp:~$ ls -ltr /etc/php/7.4/`
 
 `anup@lamp:~$ ls -ltr /etc/php/7.4/apache2/`
+
+
+
+
+# U20, LAMP —Apache2 Virtual Host
+
+#### Create the directory for your_domain,
+
+`anup@lamp:~$ sudo mkdir /var/www/html/anuniqstv.lamp.ek`
+
+`anup@lamp:~$ sudo chown -R $USER:$USER /var/www/html/anuniqstv.lamp.ek`
+
+#### Changes on main configuration,
+
+`anup@lamp:~$ sudo nano /etc/apache2/apache2.conf`
+
+    IncludeOptional conf-enabled/*.conf
+    IncludeOptional sites-enabled/*.conf
+
+And add a line containing ServerName 127.0.0.1 to the end of the file,
+
+`ServerName 127.0.0.1`
+
+#### Create a new configuration file in Apache’s sites-available,
+
+`anup@lamp:~$ ls -ltr /etc/apache2/sites-available`
+
+`anup@lamp:~$ ls -ltr /etc/apache2/sites-enabled/`
+
+`anup@lamp:~$ sudo cp /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf.backup`
+
+`anup@lamp:~$ sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf.backup`
+
+`anup@lamp:~$ sudo nano /etc/apache2/sites-available/anuniqstv.lamp.ek.conf`
+
+    <VirtualHost *:80>
+    ServerName 192.168.56.12
+    ServerAlias 192.168.56.12  
+    ServerAdmin uniqs.anup@gmail.com
+    DocumentRoot /var/www/html/anuniqstv.lamp.ek 
+
+    <Directory /var/www/html/anuniqstv.lamp.ek>
+        Options -Indexes +FollowSymLinks
+        AllowOverride All
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/anuniqstv.lamp.ek-error.log
+    CustomLog ${APACHE_LOG_DIR}/anuniqstv.lamp.ek-access.log combined
+</VirtualHost>
+#### Enable new configuration,
+
+`anup@lamp:~$ sudo a2ensite anuniqstv.lamp.ek`
+
+`anup@lamp:~$ sudo systemctl reload apache2.service`
+
+`anup@lamp:~$ ls -ltr /etc/apache2/sites-available`
+
+`anup@lamp:~$ ls -ltr /etc/apache2/sites-enabled/`
+
+#### Disable default configuration,
+
+`anup@lamp:~$ sudo a2dissite 000-default`
+
+`anup@lamp:~$ sudo systemctl reload apache2.service`
+
+`anup@lamp:~$ ls -ltr /etc/apache2/sites-enabled/`
+
+#### Test configuration,
+
+`anup@lamp:~$ sudo apache2ctl configtest`
+
+`anup@lamp:~$ sudo journalctl -u apache2.service --since today --no-pager`
+
+#### Create an index.html file,
+
+`anup@lamp:~$ nano /var/www/html/anuniqstv.lamp.ek/index.html`
+
+    <html>
+        <head>
+            <title> LAMP Server</title>
+        </head>
+        <body>
+            <h1>Hey ! from <em> anuniqsTV</em>. </h1>
+    <p>Works fine !</p>
+        </body>
+    </html>
+`anup@lamp:~$ sudo systemctl reload apache2.service`
+
+### Access,
+
+`anup@lamp:~$ telnet 192.168.56.12 80`
+
+`anup@lamp:~$ curl -Is http://192.168.56.12 | head -1`
+
+### Open your favorite browser : [http://192.168.56.12/](http://192.168.56.12/ "http://192.168.56.12/")
