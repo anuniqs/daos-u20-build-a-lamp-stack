@@ -350,3 +350,78 @@ And add a line containing ServerName 127.0.0.1 to the end of the file,
 `anup@lamp:~$ curl -Is http://192.168.56.12/info.php | head -1`
 
 ### Open your favorite browser : [http://192.168.56.12/info.php](http://192.168.56.12/info.php "http://192.168.56.12/info.php")
+
+
+
+
+# U20, LAMP —Database Connection from PHP
+
+
+#### Connect to the MySQL console with root account,
+
+`anup@lamp:~$ sudo mysql`
+
+    mysql> SHOW DATABASES;
+#### Create Database and a User,
+
+    mysql> CREATE DATABASE lampdb;
+    
+    mysql> CREATE USER 'lampuser'@'%' IDENTIFIED WITH mysql_native_password BY 'aBkJwU@@Cmc9B';
+    
+    mysql> GRANT ALL ON lampdb.* TO 'lampuser'@'%';
+    
+    mysql> EXIT
+
+#### Connect to the MySQL console with new account,
+
+`anup@lamp:~$ mysql -u lampuser -p` , `aBkJwU@@Cmc9B`
+
+    mysql> SHOW DATABASES;
+
+
+    CREATE TABLE lampdb.lamptable (
+    	item_id INT AUTO_INCREMENT,
+    	content VARCHAR(255),
+    	PRIMARY KEY(item_id)
+    );
+
+#### Insert value into the table,
+
+    mysql> describe lampdb.lamptable;
+    
+    mysql> INSERT INTO lampdb.lamptable (content) VALUES ("Lamp data ek");
+    
+    mysql> INSERT INTO lampdb.lamptable (content) VALUES ("Lamp data dui");
+    
+    mysql> INSERT INTO lampdb.lamptable (content) VALUES ("Lamp data tin");
+    
+    mysql> INSERT INTO lampdb.lamptable (content) VALUES ("Lamp data char");
+    
+    mysql> select * from lampdb.lamptable;
+
+#### PHP script connects to the MySQL database and queries for the content of table,
+`anup@lamp:~$ nano /var/www/html/anuniqstv.lamp.ek/lampdata.php`
+
+    <?php
+    $user = "lampuser";
+    $password = "aBkJwU@@Cmc9B";
+    $database = "lampdb";
+    $table = "lamptable";
+    
+    try {
+      $db = new PDO("mysql:host=localhost;dbname=$database", $user, $password);
+      echo "<h2>TODO</h2><ol>"; 
+      foreach($db->query("SELECT content FROM $table") as $row) {
+        echo "<li>" . $row['content'] . "</li>";
+      }
+      echo "</ol>";
+    } catch (PDOException $e) {
+        print "Error!: " . $e->getMessage() . "<br/>";
+        die();
+    }
+
+#### Access,
+
+`anup@lamp:~$ curl -Is http://192.168.56.12/lampdata.php | head -1`
+
+### Open your favorite browser : [http://192.168.56.12/lampdata.php](http://192.168.56.12/lampdata.php "http://192.168.56.12/lampdata.php")
