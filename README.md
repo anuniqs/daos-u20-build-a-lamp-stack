@@ -8,7 +8,7 @@
 [U20, LAMP —( P ) PHP](https://github.com/anuniqs/paper-build-a-lamp-stack-ubuntu20/wiki/U20,-LAMP-%E2%80%94%28-P-%29-PHP)
 
 
-## Editing U20, LAMP —( L ) Linux
+# U20, LAMP —( L ) Linux
 
 
 `anup@lamp:/var/log$ cat /etc/os-release`
