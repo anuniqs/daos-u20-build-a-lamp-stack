@@ -332,3 +332,21 @@ And add a line containing ServerName 127.0.0.1 to the end of the file,
 `anup@lamp:~$ curl -Is http://192.168.56.12 | head -1`
 
 ### Open your favorite browser : [http://192.168.56.12/](http://192.168.56.12/ "http://192.168.56.12/")
+
+
+
+
+# U20, LAMP —PHP Processing
+
+#### Create a .php file with valid PHP code,
+
+`anup@lamp:~$ nano /var/www/html/anuniqstv.lamp.ek/info.php`
+
+    <?php
+    phpinfo();
+
+#### Access,
+
+`anup@lamp:~$ curl -Is http://192.168.56.12/info.php | head -1`
+
+### Open your favorite browser : [http://192.168.56.12/info.php](http://192.168.56.12/info.php "http://192.168.56.12/info.php")
