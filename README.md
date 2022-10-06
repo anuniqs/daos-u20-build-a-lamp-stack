@@ -209,3 +209,31 @@
     mysql> use bookstore;
     mysql> show tables;
     mysql> EXIT;
+
+
+
+# U20, LAMP —( P ) PHP
+
+### Installation,
+
+`anup@lamp:~$ sudo apt-get update`
+
+`anup@lamp:~$ sudo apt-cache policy php`
+
+`anup@lamp:~$ sudo apt-get install php libapache2-mod-php php-mysql`
+
+`anup@lamp:~$ dpkg -l | grep -i "php"`
+
+### Version,
+
+`anup@lamp:~$ php -v`
+
+### Logs,
+
+By default, `/var/log/apache2/error.log` , But this can be configured in `/etc/php5/apache2/php.ini`.
+
+### Directory,
+
+`anup@lamp:~$ ls -ltr /etc/php/7.4/`
+
+`anup@lamp:~$ ls -ltr /etc/php/7.4/apache2/`
